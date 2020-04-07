@@ -4,9 +4,11 @@ class LogConsoleOnShake extends StatefulWidget {
   final Widget child;
   final bool dark;
   final bool debugOnly;
+  final int bufferSize;
 
   LogConsoleOnShake({
     @required this.child,
+    this.bufferSize,
     this.dark,
     this.debugOnly = true,
   });
@@ -39,7 +41,7 @@ class _LogConsoleOnShakeState extends State<LogConsoleOnShake> {
   }
 
   _init() {
-    LogConsole.init();
+    LogConsole.init(bufferSize: widget.bufferSize);
     _detector = ShakeDetector(onPhoneShake: _openLogConsole);
     _detector.startListening();
   }
