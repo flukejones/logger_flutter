@@ -21,7 +21,7 @@ class LogConsole extends StatefulWidget {
   LogConsole(
       {this.dark = false,
       this.showCloseButton = false,
-      @required this.incoming})
+      required this.incoming})
       : assert(_initialized, "Please call LogConsole.init() first.");
 
   static void init({int bufferSize = 20}) {
@@ -38,7 +38,7 @@ class LogConsole extends StatefulWidget {
 class _LogConsoleState extends State<LogConsole> {
   ListQueue<RenderedEvent> _renderedBuffer = ListQueue();
   List<RenderedEvent> _filteredBuffer = [];
-  StreamSubscription<OutputEvent> logListen;
+  late StreamSubscription<OutputEvent> logListen;
 
   var _scrollController = ScrollController();
   var _filterController = TextEditingController();
@@ -270,7 +270,9 @@ class _LogConsoleState extends State<LogConsole> {
               )
             ],
             onChanged: (value) {
-              _filterLevel = value;
+              if (value != null){
+                _filterLevel = value as Level;
+              }
               _refreshFilter();
             },
           )
@@ -317,9 +319,9 @@ class _LogConsoleState extends State<LogConsole> {
 
 class LogBar extends StatelessWidget {
   final bool dark;
-  final Widget child;
+  late final Widget child;
 
-  LogBar({this.dark, this.child});
+  LogBar({this.dark = false, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -330,7 +332,7 @@ class LogBar extends StatelessWidget {
           boxShadow: [
             if (!dark)
               BoxShadow(
-                color: Colors.grey[400],
+                color: Colors.grey[400]!,
                 blurRadius: 3,
               ),
           ],
