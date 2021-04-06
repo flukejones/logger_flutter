@@ -7,8 +7,8 @@ class AnsiParser {
 
   AnsiParser(this.dark);
 
-  late Color foreground;
-  late Color background;
+  Color? foreground;
+  Color? background;
   List<TextSpan> spans = [];
 
   void parse(String s) {
